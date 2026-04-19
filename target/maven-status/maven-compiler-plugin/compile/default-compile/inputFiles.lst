@@ -1,0 +1,8 @@
+F:\桌面\Test\src\main\java\com\example\studentmanagement\StudentManagementApplication.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\dto\StudentRequest.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\model\Student.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\controller\StudentController.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\repository\StudentRepository.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\exception\GlobalExceptionHandler.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\service\StudentService.java
+F:\桌面\Test\src\main\java\com\example\studentmanagement\config\DataInitializer.java

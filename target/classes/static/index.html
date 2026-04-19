@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow">Student Desk</p>
+            <h1>简易学生管理系统</h1>
+            <p class="hero-text">一个前后端一体的小型示例项目，支持学生信息的新增、编辑、删除与查询。</p>
+        </div>
+        <div class="hero-stat">
+            <span>实时列表</span>
+            <strong id="student-count">0</strong>
+            <small>当前学生数</small>
+        </div>
+    </header>
+
+    <main class="content-grid">
+        <section class="panel form-panel">
+            <div class="panel-header">
+                <h2 id="form-title">新增学生</h2>
+                <button id="reset-button" class="ghost-button" type="button">清空表单</button>
+            </div>
+            <form id="student-form" class="student-form">
+                <input id="student-id" type="hidden">
+
+                <label>
+                    <span>学号</span>
+                    <input id="studentNo" name="studentNo" type="text" placeholder="例如 S2024008" required>
+                </label>
+
+                <label>
+                    <span>姓名</span>
+                    <input id="name" name="name" type="text" placeholder="请输入学生姓名" required>
+                </label>
+
+                <label>
+                    <span>年龄</span>
+                    <input id="age" name="age" type="number" min="1" max="120" placeholder="18" required>
+                </label>
+
+                <label>
+                    <span>专业</span>
+                    <input id="major" name="major" type="text" placeholder="例如 软件工程" required>
+                </label>
+
+                <label>
+                    <span>邮箱</span>
+                    <input id="email" name="email" type="email" placeholder="name@example.com" required>
+                </label>
+
+                <div class="form-actions">
+                    <button class="primary-button" type="submit">保存学生</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel list-panel">
+            <div class="panel-header">
+                <h2>学生列表</h2>
+                <button id="refresh-button" class="ghost-button" type="button">刷新</button>
+            </div>
+
+            <div id="message" class="message" aria-live="polite"></div>
+
+            <div class="table-shell">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>年龄</th>
+                        <th>专业</th>
+                        <th>邮箱</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="student-table-body">
+                    <tr>
+                        <td colspan="6" class="empty-state">正在加载数据...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
