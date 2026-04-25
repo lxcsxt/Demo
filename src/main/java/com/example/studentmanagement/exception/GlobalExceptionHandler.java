@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -38,10 +39,33 @@ public class GlobalExceptionHandler {
         return buildResponse(status, message);
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
+        String message = resolveDataIntegrityMessage(exception);
+        return buildResponse(HttpStatus.BAD_REQUEST, message);
+    }
+
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("status", status.value());
         body.put("message", message);
         return ResponseEntity.status(status).body(body);
+    }
+
+    private String resolveDataIntegrityMessage(DataIntegrityViolationException exception) {
+        String message = exception.getMostSpecificCause() == null
+            ? exception.getMessage()
+            : exception.getMostSpecificCause().getMessage();
+
+        if (message == null) {
+            return "数据约束冲突";
+        }
+
+        String normalized = message.toLowerCase();
+        if (normalized.contains("student_no") || normalized.contains("unique")) {
+            return "学号已存在";
+        }
+
+        return "数据约束冲突";
     }
 }

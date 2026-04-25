@@ -65,6 +65,22 @@ function fillForm(student) {
     fields.studentNo.focus();
 }
 
+function createTextCell(value) {
+    const cell = document.createElement("td");
+    cell.textContent = String(value);
+    return cell;
+}
+
+function createActionButton(action, id, label, type) {
+    const button = document.createElement("button");
+    button.className = `action-button ${type}`;
+    button.type = "button";
+    button.dataset.action = action;
+    button.dataset.id = String(id);
+    button.textContent = label;
+    return button;
+}
+
 function renderRows(students) {
     studentCount.textContent = students.length;
 
@@ -77,21 +93,29 @@ function renderRows(students) {
         return;
     }
 
-    tableBody.innerHTML = students.map((student) => `
-        <tr>
-            <td>${student.studentNo}</td>
-            <td>${student.name}</td>
-            <td>${student.age}</td>
-            <td>${student.major}</td>
-            <td>${student.email}</td>
-            <td>
-                <div class="row-actions">
-                    <button class="action-button edit" type="button" data-action="edit" data-id="${student.id}">编辑</button>
-                    <button class="action-button delete" type="button" data-action="delete" data-id="${student.id}">删除</button>
-                </div>
-            </td>
-        </tr>
-    `).join("");
+    tableBody.replaceChildren();
+
+    const fragment = document.createDocumentFragment();
+    students.forEach((student) => {
+        const row = document.createElement("tr");
+        row.appendChild(createTextCell(student.studentNo));
+        row.appendChild(createTextCell(student.name));
+        row.appendChild(createTextCell(student.age));
+        row.appendChild(createTextCell(student.major));
+        row.appendChild(createTextCell(student.email));
+
+        const actionCell = document.createElement("td");
+        const actionWrapper = document.createElement("div");
+        actionWrapper.className = "row-actions";
+        actionWrapper.appendChild(createActionButton("edit", student.id, "编辑", "edit"));
+        actionWrapper.appendChild(createActionButton("delete", student.id, "删除", "delete"));
+        actionCell.appendChild(actionWrapper);
+        row.appendChild(actionCell);
+
+        fragment.appendChild(row);
+    });
+
+    tableBody.appendChild(fragment);
 }
 
 async function loadStudents() {
